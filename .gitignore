@@ -1,0 +1,13 @@
+# variavel do ambiente
+venv/
+.env
+
+# Cache e compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Banco de dados local
+*.postgres
+

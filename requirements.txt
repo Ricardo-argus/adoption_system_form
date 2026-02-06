@@ -1,0 +1,2 @@
+lista todas as dependências do projeto (bibliotecas Python).
+
