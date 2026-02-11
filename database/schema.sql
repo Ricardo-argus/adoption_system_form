@@ -1,4 +1,11 @@
 -- script de criação e migração do banco de dados
+
+CREATE DATABASE tocadospeludos;
+
+USE DATABASE tocadospeludos;
+
+
+
 CREATE TABLE adotantes (
     id INTEGER PRIMARY KEY auto_increment,
     nome VARCHAR(50) NOT NULL,
