@@ -1,15 +1,35 @@
 <!--"formulario de adoção"-->
 
 {% extends "base.html" %}
+
 {% block content %}
 <h2>Cadastro de Adotante</h2>
-<form method="POST" action="{{ url_for('salvar') }}">
+<form method="POST" action="/cadastro" enctype="multipart/form-data">
+  <!-- Dados básicos -->
   <input type="text" name="nome" placeholder="Nome" required><br>
   <input type="text" name="cpf" placeholder="CPF" required><br>
   <input type="email" name="email" placeholder="Email" required><br>
   <input type="text" name="telefone" placeholder="Telefone"><br>
   <input type="text" name="endereco" placeholder="Endereço"><br>
   <input type="text" name="ambiente" placeholder="Ambiente"><br>
-  <button type="submit">Salvar</button>
+
+  <!-- Informações adicionais -->
+  <label for="foto">Envie uma foto do ambiente:</label><br>
+  <input type="file" id="foto" name="foto"><br><br>
+
+  <label for="animais">Quantos animais você possui atualmente?</label><br>
+  <input type="number" id="animais" name="animais" min="0"><br><br>
+
+  <label for="experiencia">Já teve experiência com adoção antes?</label><br>
+  <select id="experiencia" name="experiencia">
+    <option value="sim">Sim</option>
+    <option value="nao">Não</option>
+  </select><br><br>
+
+  <button type="submit">Enviar Cadastro</button>
 </form>
+
+<!-- Link para voltar à lista -->
+<p>Após enviar seu cadastro, veja mais sobre nós:</p>
+<a href="{{ url_for('index') }}" class="btn">Continuar</a>
 {% endblock %}

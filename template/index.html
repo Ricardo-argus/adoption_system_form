@@ -1,26 +1,6 @@
 <!--"pagina inicial site"-->
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Adotantes</title>
-</head>
-<body>
-    <h1>Adotantes cadastrados</h1>
-    <ul>
-        {% for adotante in adotantes %}
-            <li>{{ adotante.nome }} - {{ adotante.email }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
-
-
-
-
-
 {% extends "base.html" %}
+
 {% block content %}
 <h2>Lista de Adotantes</h2>
 <table>
@@ -33,5 +13,7 @@
   </tr>
   {% endfor %}
 </table>
-<a href="{{ url_for('cadastro') }}">Cadastrar novo adotante</a>
+
+<!-- Botão para cadastro -->
+<a href="{{ url_for('cadastro') }}" class="btn">Cadastrar novo adotante</a>
 {% endblock %}
