@@ -23,13 +23,13 @@ def get_db_connection():
 
 # Página inicial - lista de adotantes
 @app.route("/")
-def index():
+def main_screen():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM adotantes")
     adotantes = cursor.fetchall()
     conn.close()
-    return render_template("index.html", adotantes=adotantes)
+    return render_template("main_screen.html", adotantes=adotantes)
 
 # Página de cadastro
 @app.route("/cadastro")
@@ -54,7 +54,7 @@ def salvar():
     )
     conn.commit()
     conn.close()
-    return redirect(url_for("index"))
+    return redirect(url_for("main_screen"))
 
 if __name__ == "__main__":
     app.run(debug=True)
