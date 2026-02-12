@@ -1,17 +1,16 @@
-#back end flask ou django 
-
 from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
 from dotenv import load_dotenv
 import os
-
+from werkzeug.utils import secure_filename
 
 load_dotenv(dotenv_path="C:\\tocadospeludos\\.env")
 
 app = Flask(__name__, template_folder="C:\\tocadospeludos\\template")
 
+UPLOAD_FOLDER = "C:\\tocadospeludos\\static\\uploads"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Função auxiliar para conectar ao banco
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
@@ -21,7 +20,6 @@ def get_db_connection():
         database=os.getenv("DB_NAME")
     )
 
-# Página inicial - lista de adotantes
 @app.route("/")
 def main_screen():
     conn = get_db_connection()
@@ -31,12 +29,10 @@ def main_screen():
     conn.close()
     return render_template("main_screen.html", adotantes=adotantes)
 
-# Página de cadastro
 @app.route("/cadastro")
 def cadastro():
     return render_template("cadastro.html")
 
-# Rota para salvar adotante
 @app.route("/salvar", methods=["POST"])
 def salvar():
     nome = request.form["nome"]
@@ -55,6 +51,17 @@ def salvar():
     conn.commit()
     conn.close()
     return redirect(url_for("main_screen"))
+
+# Rota separada para upload de foto
+@app.route("/upload_foto", methods=["POST"])
+def upload_foto():
+    foto = request.files.get("foto")
+    if foto and foto.filename != "":
+        filename = secure_filename(foto.filename)
+        foto.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        # Retorna o caminho relativo para ser usado no front
+        return f"static/uploads/{filename}"
+    return "Nenhum arquivo enviado"
 
 if __name__ == "__main__":
     app.run(debug=True)
